@@ -1,0 +1,54 @@
+<html lang="en">
+  <body>
+    <h1>I love you Brianna! I built this for you ♥</h1>
+    <audio controls=""></audio>
+    <div>
+      <button class="forward">>></button> <button class="back"><<</button> <button class="faster">faster</button>
+      <button class="slower">slower</button> <span class="current_speed"></span>
+    </div>
+    <div><label for="file">Which file do you want to play?</label> <input type="file" name="file" /></div>
+
+    <script>
+      const audio = document.querySelector('audio');
+      const forward = document.querySelector('.forward');
+      const back = document.querySelector('.back');
+      const faster = document.querySelector('.faster');
+      const slower = document.querySelector('.slower');
+      const currentSpeedDisplay = document.querySelector('.current_speed');
+      const fileInput = document.querySelector('input');
+
+      let currentSpeed = 1;
+
+      speedChange(currentSpeed);
+
+      function backClicked() {
+        audio.currentTime -= 10;
+      }
+      function forwardClicked() {
+        audio.currentTime += 10;
+      }
+      function fasterClicked() {
+        const newRate = (audio.playbackRate += 0.25);
+        speedChange(newRate);
+      }
+      function slowerClicked() {
+        const newRate = (audio.playbackRate -= 0.25);
+        speedChange(newRate);
+      }
+      function speedChange(speed) {
+        currentSpeedDisplay.innerHTML = `Current Speed: ${speed}x`;
+      }
+      function handleFileInput(e) {
+        const parts = e.target.value.split('\\');
+        const fileName = parts[parts.length - 1];
+        audio.src = `./lectures/${fileName}`;
+      }
+
+      forward.addEventListener('mousedown', forwardClicked);
+      back.addEventListener('mousedown', backClicked);
+      faster.addEventListener('mousedown', fasterClicked);
+      slower.addEventListener('mousedown', slowerClicked);
+      fileInput.addEventListener('change', handleFileInput);
+    </script>
+  </body>
+</html>
